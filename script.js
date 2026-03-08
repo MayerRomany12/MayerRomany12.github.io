@@ -1,233 +1,228 @@
 /* ═══════════════════════════════════════════════════════════════
-   MAYER ROMANY — PORTFOLIO JAVASCRIPT
-   Features: typed text, scroll reveals, skill bars, theme toggle,
-             custom cursor, smooth nav, contact form feedback
+   MAYER ROMANY — PORTFOLIO v2  JAVASCRIPT
+   Features: Preloader · Sticky Nav · Typed text · Tabs ·
+             Skill bars · Scroll reveals · Form · Back-to-top
 ═══════════════════════════════════════════════════════════════ */
 
 'use strict';
 
-// ─────────────────────────────────────────
-// 1. LUCIDE ICONS — initialise after DOM ready
-// ─────────────────────────────────────────
-document.addEventListener('DOMContentLoaded', () => {
-  if (typeof lucide !== 'undefined') lucide.createIcons();
+/* ─────────────────────────────────────────
+   UTILITY
+───────────────────────────────────────── */
+const $ = (sel, ctx = document) => ctx.querySelector(sel);
+const $$ = (sel, ctx = document) => [...ctx.querySelectorAll(sel)];
 
-  initCursor();
-  initNav();
-  initTheme();
-  initTyped();
-  initReveal();
-  initSkillBars();
-  initContactForm();
-  setYear();
-});
+/* ─────────────────────────────────────────
+   1. PRELOADER
+───────────────────────────────────────── */
+(function initPreloader() {
+  const loader  = $('#preloader');
+  const fill    = $('#preFill');
+  if (!loader) return;
 
-// ─────────────────────────────────────────
-// 2. CUSTOM CURSOR
-// ─────────────────────────────────────────
-function initCursor() {
-  const cursor = document.getElementById('cursor');
-  const trail  = document.getElementById('cursor-trail');
-  if (!cursor || !trail) return;
+  let pct = 0;
+  const interval = setInterval(() => {
+    pct += Math.random() * 18;
+    if (pct >= 100) { pct = 100; clearInterval(interval); }
+    fill.style.width = pct + '%';
+    if (pct >= 100) {
+      setTimeout(() => {
+        loader.classList.add('hidden');
+        document.body.style.overflow = '';
+        // Trigger hero reveals after loader hides
+        triggerHeroAnimations();
+      }, 300);
+    }
+  }, 90);
 
-  let mx = 0, my = 0, tx = 0, ty = 0;
+  document.body.style.overflow = 'hidden';
+})();
 
-  document.addEventListener('mousemove', e => {
-    mx = e.clientX; my = e.clientY;
-    cursor.style.left = mx + 'px';
-    cursor.style.top  = my + 'px';
-  });
-
-  // Lerp the trail
-  (function animTrail() {
-    tx += (mx - tx) * 0.12;
-    ty += (my - ty) * 0.12;
-    trail.style.left = tx + 'px';
-    trail.style.top  = ty + 'px';
-    requestAnimationFrame(animTrail);
-  })();
-
-  // Scale on interactive elements
-  document.querySelectorAll('a, button, .project-card, .skill-group').forEach(el => {
-    el.addEventListener('mouseenter', () => {
-      cursor.style.transform = 'translate(-50%,-50%) scale(2.5)';
-      trail.style.transform  = 'translate(-50%,-50%) scale(0.5)';
-      trail.style.opacity    = '0.15';
-    });
-    el.addEventListener('mouseleave', () => {
-      cursor.style.transform = 'translate(-50%,-50%) scale(1)';
-      trail.style.transform  = 'translate(-50%,-50%) scale(1)';
-      trail.style.opacity    = '0.4';
-    });
-  });
+function triggerHeroAnimations() {
+  $$('.hero .reveal, .hero [data-reveal]').forEach(el => el.classList.add('visible'));
 }
 
-// ─────────────────────────────────────────
-// 3. NAVIGATION — sticky + mobile burger
-// ─────────────────────────────────────────
-function initNav() {
-  const nav    = document.getElementById('nav');
-  const burger = document.getElementById('navBurger');
-  const menu   = document.getElementById('mobileMenu');
-
-  // Scroll effect
+/* ─────────────────────────────────────────
+   2. STICKY HEADER
+───────────────────────────────────────── */
+(function initHeader() {
+  const header = $('#header');
+  if (!header) return;
   window.addEventListener('scroll', () => {
-    nav.classList.toggle('scrolled', window.scrollY > 30);
+    header.classList.toggle('scrolled', window.scrollY > 40);
   }, { passive: true });
+})();
 
-  // Burger
+/* ─────────────────────────────────────────
+   3. MOBILE BURGER MENU
+───────────────────────────────────────── */
+(function initBurger() {
+  const burger  = $('#burger');
+  const navList = $('#navList');
+  if (!burger || !navList) return;
+
   burger.addEventListener('click', () => {
-    const open = menu.classList.toggle('open');
+    const open = navList.classList.toggle('mob-open');
     burger.setAttribute('aria-expanded', open);
+    navList.style.display = open ? 'flex' : '';
   });
 
-  // Close on link click
-  document.querySelectorAll('.mob-link').forEach(link => {
+  // Close when a link is clicked
+  $$('.nav-link').forEach(link => {
     link.addEventListener('click', () => {
-      menu.classList.remove('open');
+      navList.classList.remove('mob-open');
+      navList.style.display = '';
+    });
+  });
+})();
+
+/* ─────────────────────────────────────────
+   4. SMOOTH SCROLL & ACTIVE NAV LINK
+───────────────────────────────────────── */
+(function initSmoothScroll() {
+  const NAV_H = 70;
+
+  // Smooth scroll on anchor click
+  $$('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const target = $(a.getAttribute('href'));
+      if (!target) return;
+      e.preventDefault();
+      window.scrollTo({ top: target.offsetTop - NAV_H, behavior: 'smooth' });
     });
   });
 
-  // Active link highlight on scroll
-  const sections = document.querySelectorAll('section[id]');
-  const navLinks = document.querySelectorAll('.nav-links a');
+  // Active nav highlighting via IntersectionObserver
+  const sections = $$('section[id]');
+  const navLinks = $$('.nav-link');
+  const observer = new IntersectionObserver(
+    entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          navLinks.forEach(l => l.classList.remove('active'));
+          const active = navLinks.find(l => l.getAttribute('data-section') === entry.target.id);
+          if (active) active.classList.add('active');
+        }
+      });
+    },
+    { rootMargin: `-${NAV_H}px 0px -60% 0px`, threshold: 0 }
+  );
+  sections.forEach(s => observer.observe(s));
+})();
 
-  window.addEventListener('scroll', () => {
-    let current = '';
-    sections.forEach(sec => {
-      if (window.scrollY >= sec.offsetTop - 120) current = sec.id;
-    });
-    navLinks.forEach(a => {
-      a.classList.toggle('active', a.getAttribute('href') === '#' + current);
-    });
-  }, { passive: true });
-}
-
-// ─────────────────────────────────────────
-// 4. DARK / LIGHT THEME TOGGLE
-// ─────────────────────────────────────────
-function initTheme() {
-  const btn  = document.getElementById('themeToggle');
-  const html = document.documentElement;
-
-  // Load saved preference
-  const saved = localStorage.getItem('theme') || 'dark';
-  html.setAttribute('data-theme', saved);
-
-  btn.addEventListener('click', () => {
-    const current = html.getAttribute('data-theme');
-    const next = current === 'dark' ? 'light' : 'dark';
-    html.setAttribute('data-theme', next);
-    localStorage.setItem('theme', next);
-    // Re-init icons so sun/moon visibility is correct
-    if (typeof lucide !== 'undefined') lucide.createIcons();
-  });
-}
-
-// ─────────────────────────────────────────
-// 5. TYPED TEXT ANIMATION
-// ─────────────────────────────────────────
-function initTyped() {
-  const el = document.getElementById('typed');
+/* ─────────────────────────────────────────
+   5. TYPED HERO TEXT
+───────────────────────────────────────── */
+(function initTyped() {
+  const el = $('#heroRole');
   if (!el) return;
 
-  const strings = [
+  const roles = [
     'Data Scientist',
-    'Machine Learning Engineer',
-    'Deep Learning Enthusiast',
-    'Computer Science Student',
+    'ML Engineer',
+    'Deep Learning Dev',
+    'Problem Solver',
+    'CS Student @ AASTMT',
   ];
 
-  let si = 0, ci = 0, deleting = false;
-  const typeSpeed = 80, deleteSpeed = 45, pause = 1800;
+  let ri = 0, ci = 0, deleting = false;
 
   function tick() {
-    const current = strings[si];
+    const current = roles[ri];
     if (deleting) {
-      el.textContent = current.substring(0, ci--);
-      if (ci < 0) { deleting = false; si = (si + 1) % strings.length; setTimeout(tick, 400); return; }
-      setTimeout(tick, deleteSpeed);
-    } else {
-      el.textContent = current.substring(0, ci++);
-      if (ci > current.length) { deleting = true; setTimeout(tick, pause); return; }
-      setTimeout(tick, typeSpeed);
+      el.textContent = current.slice(0, --ci);
+      if (ci <= 0) { deleting = false; ri = (ri + 1) % roles.length; return setTimeout(tick, 400); }
+      return setTimeout(tick, 40);
     }
+    el.textContent = current.slice(0, ++ci);
+    if (ci === current.length) { deleting = true; return setTimeout(tick, 1800); }
+    setTimeout(tick, 75);
   }
 
-  tick();
-}
+  setTimeout(tick, 1200); // start after preloader
+})();
 
-// ─────────────────────────────────────────
-// 6. SCROLL REVEAL
-// ─────────────────────────────────────────
-function initReveal() {
-  // Hero elements trigger immediately
-  document.querySelectorAll('.hero .reveal, .hero [class*="reveal-delay"]').forEach(el => {
-    el.classList.add('in-view');
-  });
-
-  // Other sections via IntersectionObserver
+/* ─────────────────────────────────────────
+   6. SCROLL REVEAL (IntersectionObserver)
+───────────────────────────────────────── */
+(function initReveal() {
   const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('in-view');
-          observer.unobserve(entry.target);
-        }
-      });
-    },
-    { threshold: 0.12 }
+    entries => entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } }),
+    { threshold: 0.1 }
   );
-
-  // Auto-wrap every direct child of .section in reveal class
-  document.querySelectorAll('.section .container > *, .section .about-grid > *, .section .skills-grid > *, .section .projects-grid > *, .section .timeline-item, .section .edu-grid > *, .section .contact-channels > *, .section .contact-form-wrap').forEach((el, i) => {
-    if (!el.classList.contains('section-label') && !el.classList.contains('section-title') && !el.classList.contains('contact-sub')) {
-      el.classList.add('reveal');
-      el.style.transitionDelay = (i * 0.07) + 's';
-    }
-    observer.observe(el);
+  // Observe all .reveal elements outside the hero (hero handled by preloader)
+  $$('.reveal').forEach(el => {
+    if (!el.closest('.hero')) observer.observe(el);
   });
+})();
 
-  // Also observe section labels and titles
-  document.querySelectorAll('.section-label, .section-title, .contact-sub').forEach(el => {
-    el.classList.add('reveal');
-    observer.observe(el);
-  });
-}
-
-// ─────────────────────────────────────────
-// 7. SKILL BAR ANIMATION
-// ─────────────────────────────────────────
-function initSkillBars() {
-  const bars = document.querySelectorAll('.skill-item');
+/* ─────────────────────────────────────────
+   7. SKILL BAR ANIMATION
+───────────────────────────────────────── */
+(function initSkillBars() {
   const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          const item = entry.target;
-          const pct  = item.getAttribute('data-pct') || '0';
-          const fill = item.querySelector('.skill-fill');
-          if (fill) {
-            // Small delay for staggered feel
-            setTimeout(() => { fill.style.width = pct + '%'; }, 150);
-          }
-          observer.unobserve(item);
-        }
-      });
-    },
+    entries => entries.forEach(e => {
+      if (e.isIntersecting) {
+        const pct  = e.target.getAttribute('data-pct');
+        const fill = e.target.querySelector('.bar-fill');
+        if (fill) setTimeout(() => { fill.style.width = pct + '%'; }, 200);
+        observer.unobserve(e.target);
+      }
+    }),
     { threshold: 0.3 }
   );
+  $$('.bar-item').forEach(b => observer.observe(b));
 
-  bars.forEach(bar => observer.observe(bar));
-}
+  // GPA bar
+  const gpaFills = $$('.gpa-fill');
+  const gpaObs = new IntersectionObserver(entries => entries.forEach(e => {
+    if (e.isIntersecting) {
+      const pct = e.target.getAttribute('data-pct') || '97.25';
+      setTimeout(() => { e.target.style.width = pct + '%'; }, 300);
+      gpaObs.unobserve(e.target);
+    }
+  }), { threshold: 0.3 });
+  gpaFills.forEach(f => gpaObs.observe(f));
+})();
 
-// ─────────────────────────────────────────
-// 8. CONTACT FORM — client-side feedback
-//    (real email requires a backend / Formspree / EmailJS)
-// ─────────────────────────────────────────
-function initContactForm() {
-  const form   = document.getElementById('contactForm');
-  const notice = document.getElementById('formNotice');
+/* ─────────────────────────────────────────
+   8. SKILLS TABS
+───────────────────────────────────────── */
+(function initTabs() {
+  $$('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const target = btn.getAttribute('data-tab');
+      // Update buttons
+      $$('.tab-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      // Update panels
+      $$('.tab-panel').forEach(p => p.classList.remove('active'));
+      const panel = $(`#tab-${target}`);
+      if (panel) {
+        panel.classList.add('active');
+        // Trigger reveals inside panel
+        $$('.reveal', panel).forEach(el => {
+          if (!el.classList.contains('visible')) {
+            setTimeout(() => el.classList.add('visible'), 50);
+          }
+        });
+        // Re-trigger bar fills
+        $$('.bar-item', panel).forEach(b => {
+          const pct  = b.getAttribute('data-pct');
+          const fill = b.querySelector('.bar-fill');
+          if (fill) { fill.style.width = '0'; setTimeout(() => { fill.style.width = pct + '%'; }, 100); }
+        });
+      }
+    });
+  });
+})();
+
+/* ─────────────────────────────────────────
+   9. CONTACT FORM
+───────────────────────────────────────── */
+(function initForm() {
+  const form   = $('#contactForm');
+  const status = $('#formStatus');
   if (!form) return;
 
   form.addEventListener('submit', e => {
@@ -237,52 +232,65 @@ function initContactForm() {
     const email   = form.email.value.trim();
     const message = form.message.value.trim();
 
-    // Basic validation
     if (!name || !email || !message) {
-      showNotice('Please fill in all fields.', 'error');
-      return;
+      return showStatus('Please fill in all required fields (*).', 'error');
     }
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      showNotice('Please enter a valid email address.', 'error');
-      return;
+      return showStatus('Please enter a valid email address.', 'error');
     }
 
-    // Simulate success (swap for real Formspree / EmailJS endpoint)
     const btn = form.querySelector('button[type="submit"]');
-    btn.textContent = 'Sending…';
+    btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Sending…';
     btn.disabled = true;
 
+    // Simulate send — swap with Formspree/EmailJS for real sending
     setTimeout(() => {
-      showNotice('✅ Message sent! Mayer will get back to you soon.', 'success');
+      showStatus('✅ Message sent! Mayer will reply to you soon.', 'success');
       form.reset();
-      btn.innerHTML = 'Send Message <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>';
+      btn.innerHTML = '<i class="fa-solid fa-paper-plane"></i> Send Message';
       btn.disabled = false;
-    }, 1200);
+    }, 1400);
   });
 
-  function showNotice(msg, type) {
-    notice.textContent = msg;
-    notice.className = 'form-notice ' + type;
+  function showStatus(msg, type) {
+    status.textContent = msg;
+    status.className = 'form-status ' + type;
   }
-}
+})();
 
-// ─────────────────────────────────────────
-// 9. FOOTER YEAR
-// ─────────────────────────────────────────
-function setYear() {
+/* ─────────────────────────────────────────
+   10. BACK TO TOP BUTTON
+───────────────────────────────────────── */
+(function initBackTop() {
+  const btn = $('#backTop');
+  if (!btn) return;
+
+  window.addEventListener('scroll', () => {
+    btn.classList.toggle('visible', window.scrollY > 400);
+  }, { passive: true });
+
+  btn.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+})();
+
+/* ─────────────────────────────────────────
+   11. FOOTER YEAR
+───────────────────────────────────────── */
+(function setYear() {
   const el = document.getElementById('year');
   if (el) el.textContent = new Date().getFullYear();
-}
+})();
 
-// ─────────────────────────────────────────
-// 10. SMOOTH SCROLL for anchor links
-// ─────────────────────────────────────────
-document.querySelectorAll('a[href^="#"]').forEach(a => {
-  a.addEventListener('click', e => {
-    const target = document.querySelector(a.getAttribute('href'));
-    if (!target) return;
-    e.preventDefault();
-    const navH = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--nav-h')) || 72;
-    window.scrollTo({ top: target.offsetTop - navH + 2, behavior: 'smooth' });
-  });
-});
+/* ─────────────────────────────────────────
+   12. PHOTO PLACEHOLDER — hover tooltip toggle
+───────────────────────────────────────── */
+(function initPhoto() {
+  const ph   = $('#photoPlaceholder');
+  const hint = ph ? ph.querySelector('.photo-hint') : null;
+  if (!ph || !hint) return;
+  hint.style.opacity = '0';
+  hint.style.transition = 'opacity .3s ease';
+  ph.addEventListener('mouseenter', () => { hint.style.opacity = '1'; });
+  ph.addEventListener('mouseleave', () => { hint.style.opacity = '0'; });
+})();
