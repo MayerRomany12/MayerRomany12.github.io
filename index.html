@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mayer Romany — Data Scientist</title>
+  <link rel="stylesheet" href="style.css" />
+  <!-- Google Fonts: Syne (display) + DM Sans (body) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <!-- Lucide Icons via CDN -->
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+</head>
+<body>
+
+  <!-- ═══════════════════════════════════ CURSOR ═══════════════════════════════════ -->
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-trail" id="cursor-trail"></div>
+
+  <!-- ═══════════════════════════════════ NAV ═══════════════════════════════════════ -->
+  <nav class="nav" id="nav">
+    <a href="#hero" class="nav-logo">MR<span class="dot">.</span></a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#education">Education</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <div class="nav-actions">
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+        <i data-lucide="sun" class="icon-sun"></i>
+        <i data-lucide="moon" class="icon-moon"></i>
+      </button>
+      <button class="nav-burger" id="navBurger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile menu -->
+  <div class="mobile-menu" id="mobileMenu">
+    <ul>
+      <li><a href="#about" class="mob-link">About</a></li>
+      <li><a href="#skills" class="mob-link">Skills</a></li>
+      <li><a href="#projects" class="mob-link">Projects</a></li>
+      <li><a href="#experience" class="mob-link">Experience</a></li>
+      <li><a href="#education" class="mob-link">Education</a></li>
+      <li><a href="#contact" class="mob-link">Contact</a></li>
+    </ul>
+  </div>
+
+  <!-- ═══════════════════════════════════ HERO ═══════════════════════════════════════ -->
+  <section class="hero" id="hero">
+    <!-- Animated grid background -->
+    <div class="hero-grid" aria-hidden="true"></div>
+    <!-- Floating orbs -->
+    <div class="orb orb-1" aria-hidden="true"></div>
+    <div class="orb orb-2" aria-hidden="true"></div>
+    <div class="orb orb-3" aria-hidden="true"></div>
+
+    <div class="hero-content">
+      <div class="hero-badge reveal">
+        <span class="badge-dot"></span>
+        Available for internships & junior roles
+      </div>
+      <h1 class="hero-name reveal-delay-1">
+        <span class="name-line">Mayer</span>
+        <span class="name-line accent">Romany</span>
+      </h1>
+      <p class="hero-title reveal-delay-2">
+        <span class="typed-wrapper">
+          <span class="typed" id="typed"></span><span class="cursor-blink">|</span>
+        </span>
+      </p>
+      <p class="hero-sub reveal-delay-3">
+        Computer Science student crafting intelligent solutions through data. <br />
+        Building ML models, unraveling patterns, and turning raw numbers into insight.
+      </p>
+      <div class="hero-cta reveal-delay-4">
+        <a href="#projects" class="btn btn-primary">View Projects <i data-lucide="arrow-right"></i></a>
+        <a href="mailto:eng.mayer.romany@gmail.com" class="btn btn-ghost">Get in Touch</a>
+      </div>
+      <div class="hero-stats reveal-delay-4">
+        <div class="stat"><span class="stat-num">3.89</span><span class="stat-label">GPA / 4.0</span></div>
+        <div class="stat-sep"></div>
+        <div class="stat"><span class="stat-num">3+</span><span class="stat-label">Projects</span></div>
+        <div class="stat-sep"></div>
+        <div class="stat"><span class="stat-num">🥈</span><span class="stat-label">Award Winner</span></div>
+      </div>
+    </div>
+
+    <div class="hero-scroll" aria-hidden="true">
+      <span>Scroll</span>
+      <div class="scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════ ABOUT ═══════════════════════════════════════ -->
+  <section class="section about" id="about">
+    <div class="container">
+      <div class="section-label">01 — About</div>
+      <div class="about-grid">
+        <div class="about-text">
+          <h2 class="section-title">A Data Mind<br /><em>Building Tomorrow.</em></h2>
+          <p>
+            I'm Mayer — a 3rd-year Computer Science student at the Arab Academy for Science, Technology & Maritime Transport, based in Aswan, Egypt. My passion sits at the intersection of data, intelligence, and impact.
+          </p>
+          <p>
+            Through internships, academic projects, and competitions, I've developed hands-on expertise in the full data science pipeline: from raw data cleaning and EDA all the way to deploying trained ML/DL models that solve real problems.
+          </p>
+          <p>
+            When I'm not building models, you'll find me exploring new algorithms or competing in academic challenges — recently taking 2nd place with my Apollo task management system.
+          </p>
+          <div class="about-langs">
+            <span class="lang-pill">🌍 Arabic (Native)</span>
+            <span class="lang-pill">🇩🇪 German</span>
+            <span class="lang-pill">🇺🇸 English</span>
+          </div>
+        </div>
+        <div class="about-card-wrap">
+          <div class="about-card">
+            <div class="card-avatar">
+              <div class="avatar-initials">MR</div>
+              <div class="avatar-ring"></div>
+            </div>
+            <div class="card-info">
+              <div class="info-row"><i data-lucide="map-pin"></i> Aswan, Egypt</div>
+              <div class="info-row"><i data-lucide="graduation-cap"></i> CS @ AASTMT</div>
+              <div class="info-row"><i data-lucide="star"></i> GPA 3.89 / 4.00</div>
+              <div class="info-row"><i data-lucide="briefcase"></i> Open to Work</div>
+            </div>
+            <a href="https://www.linkedin.com/in/mayer-romany" target="_blank" rel="noopener" class="card-link">
+              <i data-lucide="linkedin"></i> Connect on LinkedIn
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════ SKILLS ═══════════════════════════════════════ -->
+  <section class="section skills" id="skills">
+    <div class="container">
+      <div class="section-label">02 — Skills</div>
+      <h2 class="section-title">Tools of the<br /><em>Trade.</em></h2>
+
+      <div class="skills-grid">
+
+        <!-- Column 1: Languages -->
+        <div class="skill-group">
+          <div class="skill-group-header">
+            <i data-lucide="code-2"></i>
+            <span>Languages</span>
+          </div>
+          <div class="skill-bars">
+            <div class="skill-item" data-pct="90">
+              <div class="skill-meta"><span>Python</span><span class="skill-pct">90%</span></div>
+              <div class="skill-track"><div class="skill-fill"></div></div>
+            </div>
+            <div class="skill-item" data-pct="80">
+              <div class="skill-meta"><span>SQL</span><span class="skill-pct">80%</span></div>
+              <div class="skill-track"><div class="skill-fill"></div></div>
+            </div>
+            <div class="skill-item" data-pct="70">
+              <div class="skill-meta"><span>Java</span><span class="skill-pct">70%</span></div>
+              <div class="skill-track"><div class="skill-fill"></div></div>
+            </div>
+            <div class="skill-item" data-pct="75">
+              <div class="skill-meta"><span>C++</span><span class="skill-pct">75%</span></div>
+              <div class="skill-track"><div class="skill-fill"></div></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Column 2: Data Science -->
+        <div class="skill-group">
+          <div class="skill-group-header">
+            <i data-lucide="brain"></i>
+            <span>Data Science & ML</span>
+          </div>
+          <div class="skill-pills">
+            <span class="pill">Data Analysis</span>
+            <span class="pill">Data Cleaning</span>
+            <span class="pill">Feature Engineering</span>
+            <span class="pill">EDA</span>
+            <span class="pill">Model Training</span>
+            <span class="pill">Model Evaluation</span>
+            <span class="pill">Machine Learning</span>
+            <span class="pill">Deep Learning</span>
+            <span class="pill">Supervised Learning</span>
+            <span class="pill">CNNs</span>
+          </div>
+        </div>
+
+        <!-- Column 3: Libraries -->
+        <div class="skill-group">
+          <div class="skill-group-header">
+            <i data-lucide="layers"></i>
+            <span>Libraries & Tools</span>
+          </div>
+          <div class="skill-bars">
+            <div class="skill-item" data-pct="88">
+              <div class="skill-meta"><span>NumPy / Pandas</span><span class="skill-pct">88%</span></div>
+              <div class="skill-track"><div class="skill-fill"></div></div>
+            </div>
+            <div class="skill-item" data-pct="80">
+              <div class="skill-meta"><span>Scikit-learn</span><span class="skill-pct">80%</span></div>
+              <div class="skill-track"><div class="skill-fill"></div></div>
+            </div>
+            <div class="skill-item" data-pct="75">
+              <div class="skill-meta"><span>Matplotlib / Seaborn</span><span class="skill-pct">75%</span></div>
+              <div class="skill-track"><div class="skill-fill"></div></div>
+            </div>
+            <div class="skill-item" data-pct="72">
+              <div class="skill-meta"><span>TensorFlow / Keras</span><span class="skill-pct">72%</span></div>
+              <div class="skill-track"><div class="skill-fill"></div></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════ PROJECTS ═══════════════════════════════════ -->
+  <section class="section projects" id="projects">
+    <div class="container">
+      <div class="section-label">03 — Projects</div>
+      <h2 class="section-title">What I've<br /><em>Built.</em></h2>
+
+      <div class="projects-grid">
+
+        <!-- Project 1: Diabetic Retinopathy -->
+        <article class="project-card featured">
+          <div class="project-number">01</div>
+          <div class="project-tag">Deep Learning · Computer Vision</div>
+          <h3 class="project-title">Diabetic Retinopathy Detection</h3>
+          <p class="project-desc">
+            Built a CNN-based deep learning model to detect and classify diabetic retinopathy from retinal images. Developed during an intensive DL program at Orange Digital Center. Implemented image preprocessing, data augmentation, and model optimization to maximize classification accuracy on real-world medical datasets.
+          </p>
+          <div class="project-tech">
+            <span>Python</span>
+            <span>CNNs</span>
+            <span>NumPy</span>
+            <span>Pandas</span>
+            <span>Deep Learning</span>
+          </div>
+          <div class="project-links">
+            <a href="https://github.com/mayer-romany" target="_blank" rel="noopener" class="project-link">
+              <i data-lucide="github"></i> GitHub
+            </a>
+            <span class="project-highlight">🏥 Real Medical Dataset</span>
+          </div>
+        </article>
+
+        <!-- Project 2: Delay Time Prediction -->
+        <article class="project-card">
+          <div class="project-number">02</div>
+          <div class="project-tag">Machine Learning · Prediction</div>
+          <h3 class="project-title">Delay Time Prediction System</h3>
+          <p class="project-desc">
+            Designed a supervised ML system to predict operational delay times from historical data. Applied comprehensive EDA and feature engineering to uncover patterns, then trained and evaluated multiple Scikit-learn models to achieve high prediction accuracy.
+          </p>
+          <div class="project-tech">
+            <span>Python</span>
+            <span>Scikit-learn</span>
+            <span>Pandas</span>
+            <span>NumPy</span>
+          </div>
+          <div class="project-links">
+            <a href="https://github.com/mayer-romany" target="_blank" rel="noopener" class="project-link">
+              <i data-lucide="github"></i> GitHub
+            </a>
+          </div>
+        </article>
+
+        <!-- Project 3: Apollo -->
+        <article class="project-card award">
+          <div class="project-number">03</div>
+          <div class="project-tag">Algorithms · Data Structures</div>
+          <div class="award-badge">🥈 2nd Place Award</div>
+          <h3 class="project-title">Apollo — Data-Driven Task Management</h3>
+          <p class="project-desc">
+            Engineered a data-driven task management system leveraging algorithmic optimization. Analyzed task priorities and deadlines to build an intelligent scheduler using stacks, queues, and trees. Won 2nd place in academic competition judged by Dr. Tamer Abdel Latif.
+          </p>
+          <div class="project-tech">
+            <span>C++</span>
+            <span>Data Structures</span>
+            <span>Algorithms</span>
+          </div>
+          <div class="project-links">
+            <a href="https://github.com/mayer-romany" target="_blank" rel="noopener" class="project-link">
+              <i data-lucide="github"></i> GitHub
+            </a>
+            <span class="project-highlight">🏆 Award Winner — May 2025</span>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════ EXPERIENCE ═══════════════════════════════════ -->
+  <section class="section experience" id="experience">
+    <div class="container">
+      <div class="section-label">04 — Experience</div>
+      <h2 class="section-title">Where I've<br /><em>Worked.</em></h2>
+
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <div class="timeline-header">
+              <div>
+                <h3 class="timeline-role">Data Science Intern</h3>
+                <div class="timeline-company">AMIT Learning · DEPI Program</div>
+              </div>
+              <div class="timeline-date">
+                <i data-lucide="calendar"></i>
+                Present · Online
+              </div>
+            </div>
+            <ul class="timeline-bullets">
+              <li>Performed data analysis and preprocessing using Python, NumPy, and Pandas on real-world datasets.</li>
+              <li>Conducted data cleaning, feature engineering, and exploratory data analysis (EDA).</li>
+              <li>Built, trained, and evaluated machine learning models for prediction tasks.</li>
+              <li>Created data visualizations and dashboards to communicate insights and model results to stakeholders.</li>
+            </ul>
+            <div class="timeline-tags">
+              <span>Python</span><span>Pandas</span><span>NumPy</span><span>Machine Learning</span><span>EDA</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <div class="timeline-header">
+              <div>
+                <h3 class="timeline-role">Deep Learning Trainee</h3>
+                <div class="timeline-company">Orange Digital Center (ODC)</div>
+              </div>
+              <div class="timeline-date">
+                <i data-lucide="calendar"></i>
+                Dec 2025
+              </div>
+            </div>
+            <ul class="timeline-bullets">
+              <li>Completed intensive deep learning program focused on CNNs and image classification.</li>
+              <li>Developed diabetic retinopathy detection model using real medical imaging datasets.</li>
+              <li>Applied advanced techniques: image augmentation, batch normalization, and transfer learning concepts.</li>
+            </ul>
+            <div class="timeline-tags">
+              <span>Deep Learning</span><span>CNNs</span><span>Python</span><span>Image Processing</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════ EDUCATION ═══════════════════════════════════ -->
+  <section class="section education" id="education">
+    <div class="container">
+      <div class="section-label">05 — Education & Certs</div>
+      <h2 class="section-title">The Foundation<br /><em>I Stand On.</em></h2>
+
+      <div class="edu-grid">
+        <div class="edu-card main-edu">
+          <div class="edu-icon"><i data-lucide="graduation-cap"></i></div>
+          <div class="edu-body">
+            <div class="edu-degree">B.Sc. Computer Science</div>
+            <div class="edu-school">Arab Academy for Science, Technology & Maritime Transport</div>
+            <div class="edu-sub">South Valley Campus · Egypt</div>
+            <div class="edu-period">Sep 2023 — Jul 2027</div>
+            <div class="edu-gpa"><span class="gpa-pill">GPA 3.89 / 4.00</span></div>
+            <p class="edu-note">Excellent grades in Databases, Data Structures, and Artificial Intelligence.</p>
+          </div>
+        </div>
+
+        <div class="cert-stack">
+          <div class="cert-title">Certifications</div>
+          <div class="cert-card">
+            <div class="cert-icon"><i data-lucide="award"></i></div>
+            <div class="cert-body">
+              <div class="cert-name">Introduction to Deep Learning</div>
+              <div class="cert-issuer">Orange Digital Center (ODC)</div>
+              <div class="cert-date">December 2025</div>
+            </div>
+          </div>
+
+          <div class="award-card">
+            <div class="cert-icon award-icon">🏆</div>
+            <div class="cert-body">
+              <div class="cert-name">Apollo — 2nd Place Achievement</div>
+              <div class="cert-issuer">Academic Competition</div>
+              <div class="cert-date">Awarded by Dr. Tamer Abdel Latif · May 2025</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════ CONTACT ═══════════════════════════════════════ -->
+  <section class="section contact" id="contact">
+    <div class="container">
+      <div class="section-label">06 — Contact</div>
+      <h2 class="section-title">Let's Build<br /><em>Something.</em></h2>
+      <p class="contact-sub">
+        I'm actively seeking Junior Data Scientist or Data Scientist Intern opportunities. If you have an exciting project or role, I'd love to hear from you.
+      </p>
+
+      <div class="contact-grid">
+        <div class="contact-channels">
+          <a href="mailto:eng.mayer.romany@gmail.com" class="contact-chip">
+            <i data-lucide="mail"></i>
+            <div>
+              <div class="chip-label">Email</div>
+              <div class="chip-value">eng.mayer.romany@gmail.com</div>
+            </div>
+          </a>
+          <a href="https://www.linkedin.com/in/mayer-romany" target="_blank" rel="noopener" class="contact-chip">
+            <i data-lucide="linkedin"></i>
+            <div>
+              <div class="chip-label">LinkedIn</div>
+              <div class="chip-value">linkedin.com/in/mayer-romany</div>
+            </div>
+          </a>
+          <a href="https://github.com/mayer-romany" target="_blank" rel="noopener" class="contact-chip">
+            <i data-lucide="github"></i>
+            <div>
+              <div class="chip-label">GitHub</div>
+              <div class="chip-value">github.com/mayer-romany</div>
+            </div>
+          </a>
+          <div class="contact-chip static">
+            <i data-lucide="phone"></i>
+            <div>
+              <div class="chip-label">Phone</div>
+              <div class="chip-value">+201282807407</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="contact-form-wrap">
+          <form class="contact-form" id="contactForm" novalidate>
+            <div class="form-group">
+              <label for="name">Name</label>
+              <input type="text" id="name" name="name" placeholder="Your name" required />
+            </div>
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input type="email" id="email" name="email" placeholder="your@email.com" required />
+            </div>
+            <div class="form-group">
+              <label for="message">Message</label>
+              <textarea id="message" name="message" rows="4" placeholder="Tell me about your opportunity..." required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary full-width">
+              Send Message <i data-lucide="send"></i>
+            </button>
+            <div class="form-notice" id="formNotice"></div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════ FOOTER ═══════════════════════════════════════ -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-logo">MR<span class="dot">.</span></div>
+        <p class="footer-copy">
+          Designed &amp; built by Mayer Romany · <span id="year"></span>
+        </p>
+        <div class="footer-socials">
+          <a href="mailto:eng.mayer.romany@gmail.com" aria-label="Email"><i data-lucide="mail"></i></a>
+          <a href="https://www.linkedin.com/in/mayer-romany" target="_blank" rel="noopener" aria-label="LinkedIn"><i data-lucide="linkedin"></i></a>
+          <a href="https://github.com/mayer-romany" target="_blank" rel="noopener" aria-label="GitHub"><i data-lucide="github"></i></a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
